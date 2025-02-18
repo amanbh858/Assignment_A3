@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Predictor for Aman's Company</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .container {
+            background: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Car Price Predictor</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form action="/predict" method="POST">
+            <label for="model">Select Model:</label>
+            <select name="model" id="model" required>
+                <option value="linear">Linear Regression</option>
+                <option value="ridge">Ridge Regression</option>
+                <option value="lasso">Lasso Regression</option>
+            </select>
+
+            <label for="fuel">Fuel Type:</label>
+            <select name="fuel" id="fuel" required>
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="CNG">CNG</option>
+            </select>
+
+            <label for="owner">Owner Type:</label>
+            <select name="owner" id="owner" required>
+                <option value="First Owner">First Owner</option>
+                <option value="Second Owner">Second Owner</option>
+                <option value="Third Owner">Third Owner</option>
+                <option value="Fourth & Above Owner">Fourth & Above Owner</option>
+            </select>
+
+            <label for="brand">Brand:</label>
+            <input type="text" id="brand" name="brand" placeholder="Enter car brand" required />
+
+            <label for="km_driven">Kilometers Driven:</label>
+            <input type="number" id="km_driven" name="km_driven" placeholder="Enter kilometers driven" required />
+
+            <label for="seats">Number of Seats:</label>
+            <input type="number" id="seats" name="seats" placeholder="Enter number of seats" required />
+            <label for="engine">Engine:</label>
+            <input type="number" id="engine" name="engine" placeholder="Enter the engine capacity" required />
+
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" placeholder="Enter manufacturing year" required />
+
+            <button type="submit">Predict Price</button>
+        </form>
+    </div>
+</body>
+</html>
