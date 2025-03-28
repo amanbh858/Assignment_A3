@@ -1,30 +1,21 @@
-FROM python:3.13.0-alpine
+# Use Python 3.12 as the base image
+FROM python:3.12-slim
 
-RUN apk add --no-cache \
-    gcc \
-    musl-dev \
-    libffi-dev \
-    build-base \
-    && pip install --upgrade pip
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the requirements file into the container
-COPY requirements.txt .
+# Copy the requirements.txt from the root directory to /app/
+COPY requirements.txt /app/
 
-# Upgrade pip and install required Python packages
-RUN pip install --upgrade pip
-RUN pip install  --no-cache-dir -r requirements.txt
+# Install dependencies from requirements.txt
+RUN pip install --upgrade pip && \
+    pip install -r /app/requirements.txt
 
-# Copy the entire application (including app.py) into the working directory in the container
-COPY . .
+# Copy the rest of the application files into the container
+COPY . /app/
 
-# Expose port 5000 to the outside world
+# Expose the Flask port 
 EXPOSE 5000
 
-# Optionally, you can createa3781f4fd7f0 a non-root user (if desired)
-# RUN useradd -m appUser
-# USER appUser
-
-# Set the command to run your app (this assumes your entry point is app.py)
+# Run the Flask application
 CMD ["python", "app.py"]

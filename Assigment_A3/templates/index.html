@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Price Predictor for Aman's Company</title>
+    <title>Car Price Category Predictor</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -13,18 +13,19 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #ff9a8b, #f06); /* Soft gradient background */
-            color: #333;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
         }
 
         .container {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.9);
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 700px;
+            max-width: 600px;
             transition: transform 0.3s ease;
+            color: #333;
         }
 
         .container:hover {
@@ -33,9 +34,9 @@
 
         h1 {
             text-align: center;
-            color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            color: #2575fc;
+            font-size: 2.3rem;
+            margin-bottom: 30px;
         }
 
         form {
@@ -44,104 +45,77 @@
             gap: 20px;
         }
 
+        .form-group {
+            margin-bottom: 15px;
+        }
+
         label {
+            display: block;
             font-weight: bold;
+            margin-bottom: 8px;
             color: #444;
             font-size: 1.1rem;
         }
 
-        input, select, button {
+        input, select {
+            width: 100%;
             padding: 12px;
             border-radius: 8px;
             border: 1px solid #ddd;
             font-size: 16px;
-            color: #444;
-        }
-
-        input, select {
-            transition: border-color 0.3s ease;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
         }
 
         input:focus, select:focus {
             outline: none;
-            border-color: #007bff;
-            background-color: #f1f9ff;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            border: none;
-            padding: 14px;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .error {
-            color: red;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .form-group {
-            margin-bottom: 10px;
-        }
-
-        /* Added custom background color for the inputs */
-        .form-input {
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-        }
-
-        .form-input:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2);
             background-color: #fff;
         }
 
-        .form-group select, .form-group input {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
+        button {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
         }
 
-        .form-group select:focus, .form-group input:focus {
-            border-color: #007bff;
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .form-group label {
-            font-size: 1.2rem;
+        .error {
+            color: #e63946;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .button-container {
-            display: flex;
-            justify-content: center;
+        .form-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Car Price Predictor</h1>
+        <h1>Car Price Category Predictor</h1>
         {% if error %}
             <p class="error">{{ error }}</p>
         {% endif %}
         <form action="/predict" method="POST">
             <div class="form-group">
-                <label for="model">Select Model:</label>
-                <select name="model" id="model" required class="form-input">
-                    <option value="linear">Linear Regression</option>
-                    <option value="ridge">Ridge Regression</option>
-                    <option value="lasso">Lasso Regression</option>
-                    <option value="logistic">Logistic Regression</option>
-                </select>
-            </div>
-
-            <div class="form-group">
                 <label for="fuel">Fuel Type:</label>
-                <select name="fuel" id="fuel" required class="form-input">
+                <select name="fuel" id="fuel" required>
                     <option value="Petrol">Petrol</option>
                     <option value="Diesel">Diesel</option>
                     <option value="CNG">CNG</option>
@@ -150,7 +124,7 @@
 
             <div class="form-group">
                 <label for="owner">Owner Type:</label>
-                <select name="owner" id="owner" required class="form-input">
+                <select name="owner" id="owner" required>
                     <option value="First Owner">First Owner</option>
                     <option value="Second Owner">Second Owner</option>
                     <option value="Third Owner">Third Owner</option>
@@ -160,32 +134,30 @@
 
             <div class="form-group">
                 <label for="brand">Brand:</label>
-                <input type="text" id="brand" name="brand" placeholder="Enter car brand" required class="form-input" />
+                <input type="text" id="brand" name="brand" placeholder="e.g., Toyota, Honda" required>
             </div>
 
             <div class="form-group">
                 <label for="km_driven">Kilometers Driven:</label>
-                <input type="number" id="km_driven" name="km_driven" placeholder="Enter kilometers driven" required class="form-input" />
+                <input type="number" id="km_driven" name="km_driven" placeholder="e.g., 50000" required>
             </div>
 
             <div class="form-group">
                 <label for="seats">Number of Seats:</label>
-                <input type="number" id="seats" name="seats" placeholder="Enter number of seats" required class="form-input" />
+                <input type="number" id="seats" name="seats" placeholder="e.g., 5" required min="2" max="10">
             </div>
 
             <div class="form-group">
-                <label for="engine">Engine Capacity:</label>
-                <input type="number" id="engine" name="engine" placeholder="Enter the engine capacity" required class="form-input" />
+                <label for="engine">Engine Capacity (cc):</label>
+                <input type="number" id="engine" name="engine" placeholder="e.g., 1500" required>
             </div>
 
             <div class="form-group">
                 <label for="year">Manufacturing Year:</label>
-                <input type="number" id="year" name="year" placeholder="Enter manufacturing year" required class="form-input" />
+                <input type="number" id="year" name="year" placeholder="e.g., 2018" required min="1990" max="2023">
             </div>
 
-            <div class="button-container">
-                <button type="submit">Predict Price</button>
-            </div>
+            <button type="submit">Predict Price Category</button>
         </form>
     </div>
 </body>
