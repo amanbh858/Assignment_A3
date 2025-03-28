@@ -69,6 +69,6 @@ jobs:
           echo "Deploying Flask App..."
           C:\Users\91700\Desktop\My_Assignment_A3 || exit 1  # Navigate to the deployment directory
           docker pull amanbh858/assignment_a3:12b8e5ff56c7  # Pull the updated Docker image from Docker Hub
-          docker-compose down  # Stop and remove the old container
-          docker-compose up -d  # Start the new container in detached mode
+          docker compose down  # Stop and remove the old container
+          docker compose up -d  # Start the new container in detached mode
 
