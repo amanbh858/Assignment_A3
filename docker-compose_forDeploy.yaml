@@ -2,20 +2,20 @@ version: '3.9'
 
 services:
   flask-app:
-    command: python3 app.py  # Adjust this to match your Flask app entry point, could be `flask run` or `python app.py`
-    image: amanbh858/assignment_a3:12b8e5ff56c7  # Replace with your Docker image name and tag
-    platform: linux/x86_64  # Ensure compatibility across platforms
+    command: python3 app.py  
+    image: amanbh858/my_model:latest 
+    platform: linux/x86_64  
     environment:
-      HOST: 0.0.0.0  # Flask app listens on all network interfaces
-      PORT: 5000  # Default Flask port
+      HOST: 0.0.0.0  
+      PORT: 5000  
     # Traefik routing and labels
     labels:
       traefik.enable: "true"  # Enable Traefik for routing
-      traefik.http.services.flask_app-service.loadbalancer.server.port: "5000"  # Port your Flask app listens on
-      traefik.http.routers.flask_app-router.rule: Host(`yourdomain.com`)  # Replace with your actual domain or subdomain
-      traefik.http.routers.flask_app-router.tls: "true"  # Enable TLS for secure connections
-      traefik.http.routers.flask_app-router.tls.certresolver: "production"  # Use certresolver for SSL certificates
-      traefik.http.routers.flask_app-router.entrypoints: "websecure"  # Define entrypoints for HTTPS traffic
+      traefik.http.services.flask_app-service.loadbalancer.server.port: "5000" 
+      traefik.http.routers.flask_app-router.rule: Host(`yourdomain.com`)  
+      traefik.http.routers.flask_app-router.tls: "true"  
+      traefik.http.routers.flask_app-router.tls.certresolver: "production"  
+      traefik.http.routers.flask_app-router.entrypoints: "websecure" 
     networks:
       - default
       - traefik_default  # Ensure this network exists for Traefik routing
