@@ -1,5 +1,4 @@
-# Use the official Python image from Docker Hub
-FROM python:3.12-alpine
+FROM python:3.13.0-alpine
 
 RUN apk add --no-cache \
     gcc \
@@ -11,7 +10,7 @@ RUN apk add --no-cache \
 WORKDIR /app
 
 # Copy the requirements file into the container
-COPY requirements.txt .
+COPY ./requirements.txt .
 
 # Upgrade pip and install required Python packages
 RUN pip install --upgrade pip
