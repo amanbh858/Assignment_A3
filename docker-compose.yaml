@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  flask-app:
+    image: amanbh858/assignment_a3:12b8e5ff56c7  # The image you are using from Docker Hub
+    build:
+      context: .  # The build context (current directory)
+      dockerfile: Dockerfile  # Path to Dockerfile
+    command: python3 app.py  # Command to run the Flask application
+    environment:
+      HOST: 0.0.0.0  # Bind to all interfaces (for external access)
+      PORT: 8089  # Port to expose
+    ports:
+      - "8089:8089"  # Expose port 8089 on host and map it to 8089 inside the container
+    networks:
+      - default  # Use default network
+      - traefik_default  # Traefik network for reverse proxy (optional, if using Traefik)
+
+# Networks configuration
+networks:
+  default:
+  traefik_default:
+    external: true
