@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Prediction Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a8b, #f06); /* Beautiful gradient background */
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #444;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 1.1rem;
+            color: #007bff;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        a:hover {
+            color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            text-align: center;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .back-link:active {
+            transform: translateY(1px);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Result</h1>
+        <p>The estimated price of the car using the <strong>{{ model_name }}</strong> model is:</p>
+
+        {% if 'logistic' in model_name.lower() %}
+            <h2>{{ prediction }}</h2>
+        {% else %}
+            <h2>{{ prediction }} Baht</h2>
+        {% endif %}
+
+        <a href="/" class="back-link">Predict another car price</a>
+    </div>
+</body>
+</html>

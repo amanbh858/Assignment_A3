@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Predictor for Aman's Company</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a8b, #f06); /* Soft gradient background */
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #444;
+            font-size: 1.1rem;
+        }
+
+        input, select, button {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            color: #444;
+        }
+
+        input, select {
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+            background-color: #f1f9ff;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            border: none;
+            padding: 14px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        /* Added custom background color for the inputs */
+        .form-input {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+        }
+
+        .form-input:focus {
+            background-color: #fff;
+        }
+
+        .form-group select, .form-group input {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+
+        .form-group select:focus, .form-group input:focus {
+            border-color: #007bff;
+        }
+
+        .form-group label {
+            font-size: 1.2rem;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Car Price Predictor</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form action="/predict" method="POST">
+            <div class="form-group">
+                <label for="model">Select Model:</label>
+                <select name="model" id="model" required class="form-input">
+                    <option value="linear">Linear Regression</option>
+                    <option value="ridge">Ridge Regression</option>
+                    <option value="lasso">Lasso Regression</option>
+                    <option value="logistic">Logistic Regression</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fuel">Fuel Type:</label>
+                <select name="fuel" id="fuel" required class="form-input">
+                    <option value="Petrol">Petrol</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="CNG">CNG</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="owner">Owner Type:</label>
+                <select name="owner" id="owner" required class="form-input">
+                    <option value="First Owner">First Owner</option>
+                    <option value="Second Owner">Second Owner</option>
+                    <option value="Third Owner">Third Owner</option>
+                    <option value="Fourth & Above Owner">Fourth & Above Owner</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" placeholder="Enter car brand" required class="form-input" />
+            </div>
+
+            <div class="form-group">
+                <label for="km_driven">Kilometers Driven:</label>
+                <input type="number" id="km_driven" name="km_driven" placeholder="Enter kilometers driven" required class="form-input" />
+            </div>
+
+            <div class="form-group">
+                <label for="seats">Number of Seats:</label>
+                <input type="number" id="seats" name="seats" placeholder="Enter number of seats" required class="form-input" />
+            </div>
+
+            <div class="form-group">
+                <label for="engine">Engine Capacity:</label>
+                <input type="number" id="engine" name="engine" placeholder="Enter the engine capacity" required class="form-input" />
+            </div>
+
+            <div class="form-group">
+                <label for="year">Manufacturing Year:</label>
+                <input type="number" id="year" name="year" placeholder="Enter manufacturing year" required class="form-input" />
+            </div>
+
+            <div class="button-container">
+                <button type="submit">Predict Price</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
