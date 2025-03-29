@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+import mlflow
 from sklearn.metrics import classification_report
 from sklearn.preprocessing import StandardScaler
 

@@ -29,6 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+          pip install pytest mlflow 
           pip install pytest
 
       - name: Set up MLflow Authentication
@@ -46,8 +47,8 @@ jobs:
 
       - name: Set PYTHONPATH
         run: |
-          echo "PYTHONPATH=$PWD:$PWD/ProjectA3" >> $GITHUB_ENV
-          echo "PYTHONPATH set to: $PWD:$PWD/ProjectA3"
+          echo "PYTHONPATH=$PWD:$PWD/Assignment_A3" >> $GITHUB_ENV
+          echo "PYTHONPATH set to: $PWD:$PWD/Assignment_A3"
 
       - name: Debug Flask Model Versions
         run: |

@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 import pandas as pd
 import cloudpickle  
+import mlflow
 import os
 import sys
 from Utils.utils import load_latest_model
