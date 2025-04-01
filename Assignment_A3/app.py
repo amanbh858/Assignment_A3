@@ -91,6 +91,10 @@ def predict():
             other_features
         ])
 
+        # Convert to DataFrame with correct column names if needed
+        # (This depends on how your model was trained)
+        # For MLflow models, you might need to ensure the input matches the signature
+        
         # Reshape to match expected input shape (-1, 40)
         # Pad with zeros if necessary (this is a hacky solution)
         if features.shape[1] < 40:
