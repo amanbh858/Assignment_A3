@@ -1,0 +1,26 @@
+ervices:
+  flask-app:
+    command: python3 app.py  # Ensure Flask runs the correct file
+    image: amanbh858/my_model:latest
+    platform: linux/x86_64
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5000
+    ports:
+      - "8080:5000"  # Expose Flask's internal port to the host
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.flask-app.loadbalancer.server.port=5000
+      - traefik.http.routers.flask-app.rule=Host("st125713.ml.brain.cs.ait.ac.th")
+      - traefik.http.routers.flask-app.tls=true  # Enable HTTPS
+      - traefik.http.routers.flask-app.tls.certresolver=production
+      - traefik.http.routers.flask-app.entrypoints=websecure
+    networks:
+      - default
+      - traefik_default
+
+networks:
+  default:
+  traefik_default:
+    external: true
