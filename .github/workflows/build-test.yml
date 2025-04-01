@@ -107,14 +107,14 @@ jobs:
           EOF
           chmod 600 ~/.ssh/config
           
-          # Scanning bazooka since ml2023 skips host key checking
+          # Scanning bazooka since ml brain skips host key checking
           ssh-keyscan -p 22 -H bazooka.cs.ait.ac.th >> ~/.ssh/known_hosts 2>/dev/null || echo "Warning: Scanning Failed to bazooka host key"
           chmod 600 ~/.ssh/known_hosts
           echo "ssh i am in"
 
       - name: SSH and Deploy Flask Application to Server
         run: |
-          ssh -v st125713@ml-brain <<EOF
+          ssh -v st125713@ml.brain1 <<EOF
           if [ ! -d "/home/st125713" ]; then
           echo " ERROR: Directory /home/st125713 does not exist on the server!"
           exit 1
