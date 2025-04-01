@@ -2,15 +2,14 @@ version: '3.9'
 
 services:
   flask-app:
-    command: python3 app.py  # Ensure Flask runs the correct file
-    image: amanbh858/my_model:latest
+    image: amanbh858/my_model:latest  # Use the existing Docker image
     platform: linux/x86_64
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
       - FLASK_RUN_PORT=5000
     ports:
-      - "8080:5000"  # Expose Flask's internal port to the host
+      - "8080:5000"  # Expose Flask's internal port 5000 to host port 8080
     labels:
       - traefik.enable=true
       - traefik.http.services.flask-app.loadbalancer.server.port=5000
