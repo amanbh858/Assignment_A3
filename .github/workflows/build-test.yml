@@ -114,7 +114,7 @@ jobs:
 
       - name: SSH and Deploy Flask Application to Server
         run: |
-          ssh -v st125713@ml2023 <<EOF
+          ssh -v st125713@ml-brain <<EOF
           if [ ! -d "/home/st125713" ]; then
           echo " ERROR: Directory /home/st125713 does not exist on the server!"
           exit 1
