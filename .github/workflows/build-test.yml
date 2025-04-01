@@ -3,7 +3,7 @@ name: Build, Test, and Deploy Flask Application
 on:
   push:
     branches:
-      - main  
+      - main
 
 jobs:
   build-and-test:
@@ -29,12 +29,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest mlflow 
-          pip install pytest
+          pip install pytest mlflow python-dotenv
 
       - name: Set up MLflow Authentication
         env:
-          MLFLOW_TRACKING_INSECURE: "true"
           MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
           MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
           MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
@@ -62,9 +60,9 @@ jobs:
 
       - name: Run Flask Application Tests
         run: |
-          source $GITHUB_ENV  
-          pytest Assignment_A3/app.py 
-
+          source $GITHUB_ENV
+          pytest --maxfail=1 --disable-warnings -q  # Added flags for better control during testing
+          
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -77,7 +75,7 @@ jobs:
       - name: Build and Push Docker Image
         run: |
            docker build -t amanbh858/my_model:latest . 
-           docker push amanbh858/my_model:latest  
+           docker push amanbh858/my_model:latest
 
   deploy:
     needs: build-and-test  # Deploys only if tests were successful
