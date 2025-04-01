@@ -1,0 +1,128 @@
+name: Build, Test, and Deploy Flask Application
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest mlflow 
+          pip install pytest
+
+      - name: Set up MLflow Authentication
+        env:
+          MLFLOW_TRACKING_INSECURE: "true"
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+          MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
+          MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+          APP_MODEL_NAME: ${{ secrets.APP_MODEL_NAME }}
+        run: |
+          echo "MLFLOW_TRACKING_URI=$MLFLOW_TRACKING_URI" >> $GITHUB_ENV
+          echo "MLFLOW_TRACKING_USERNAME=$MLFLOW_TRACKING_USERNAME" >> $GITHUB_ENV
+          echo "MLFLOW_TRACKING_PASSWORD=$MLFLOW_TRACKING_PASSWORD" >> $GITHUB_ENV
+          echo "APP_MODEL_NAME=$APP_MODEL_NAME" >> $GITHUB_ENV
+          echo "All environment variables are now exported."
+
+      - name: Set PYTHONPATH
+        run: |
+          echo "PYTHONPATH=$PWD:$PWD/Assignment_A3" >> $GITHUB_ENV
+          echo "PYTHONPATH set to: $PWD:$PWD/Assignment_A3"
+
+      - name: Debug Flask Model Versions
+        run: |
+          python -c "
+          from mlflow.tracking import MlflowClient;
+          client = MlflowClient();
+          versions = client.search_model_versions(\"name='st125713-a3-model'\");  
+          for v in versions: print(f'Model: {v.name}, Version: {v.version}, Stage: {v.current_stage}')
+          "
+
+      - name: Run Flask Application Tests
+        run: |
+          source $GITHUB_ENV  
+          pytest Assignment_A3/app.py 
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+           username: ${{ secrets.DOCKER_USERNAME }}
+           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        run: |
+           docker build -t amanbh858/my_model:latest . 
+           docker push amanbh858/my_model:latest  
+
+  deploy:
+    needs: build-and-test  # Deploys only if tests were successful
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key and config
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/st125713
+          chmod 600 ~/.ssh/st125713
+          
+          cat << 'EOF' > ~/.ssh/config
+          Host bazooka
+            HostName bazooka.cs.ait.ac.th
+            User st125713
+            IdentityFile ~/.ssh/st125713
+          
+          Host ml2023
+            HostName ml.brain.cs.ait.ac.th
+            User st125713
+            IdentityFile ~/.ssh/st125713
+            ProxyJump bazooka
+            StrictHostKeyChecking no
+            UserKnownHostsFile /dev/null
+          EOF
+          chmod 600 ~/.ssh/config
+          
+          # Scanning bazooka since ml2023 skips host key checking
+          ssh-keyscan -p 22 -H bazooka.cs.ait.ac.th >> ~/.ssh/known_hosts 2>/dev/null || echo "Warning: Scanning Failed to bazooka host key"
+          chmod 600 ~/.ssh/known_hosts
+          echo "ssh i am in"
+
+      - name: SSH and Deploy Flask Application to Server
+        run: |
+          ssh -v st125713@ml2023 <<EOF
+          if [ ! -d "/home/st125713" ]; then
+          echo " ERROR: Directory /home/st125713 does not exist on the server!"
+          exit 1
+          fi
+          cd /home/st125713 || { echo "ERROR: Navigation failure to /home/st125713!"; exit 1; }
+          docker compose -f docker-compose-deploy.yaml down
+          docker pull amanbh858/my_model:latest  # Pull the updated Flask image
+          docker compose -f docker-compose-deploy.yaml up -d
+          EOF

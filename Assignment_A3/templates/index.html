@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Category Predictor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.3s ease;
+            color: #333;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2575fc;
+            font-size: 2.3rem;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #444;
+            font-size: 1.1rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2);
+            background-color: #fff;
+        }
+
+        button {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .error {
+            color: #e63946;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Car Price Category Predictor</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form action="/predict" method="POST">
+            <div class="form-group">
+                <label for="fuel">Fuel Type:</label>
+                <select name="fuel" id="fuel" required>
+                    <option value="Petrol">Petrol</option>
+                    <option value="Diesel">Diesel</option>
+                    <option value="CNG">CNG</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="owner">Owner Type:</label>
+                <select name="owner" id="owner" required>
+                    <option value="First Owner">First Owner</option>
+                    <option value="Second Owner">Second Owner</option>
+                    <option value="Third Owner">Third Owner</option>
+                    <option value="Fourth & Above Owner">Fourth & Above Owner</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" placeholder="e.g., Toyota, Honda" required>
+            </div>
+
+            <div class="form-group">
+                <label for="km_driven">Kilometers Driven:</label>
+                <input type="number" id="km_driven" name="km_driven" placeholder="e.g., 50000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="seats">Number of Seats:</label>
+                <input type="number" id="seats" name="seats" placeholder="e.g., 5" required min="2" max="10">
+            </div>
+
+            <div class="form-group">
+                <label for="engine">Engine Capacity (cc):</label>
+                <input type="number" id="engine" name="engine" placeholder="e.g., 1500" required>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Manufacturing Year:</label>
+                <input type="number" id="year" name="year" placeholder="e.g., 2018" required min="1990" max="2023">
+            </div>
+
+            <button type="submit">Predict Price Category</button>
+        </form>
+    </div>
+</body>
+</html>

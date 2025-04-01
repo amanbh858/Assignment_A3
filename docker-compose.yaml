@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  flask-app:
+    image: amanbh858/my_model:latest  
+    build:
+      context: .  
+      dockerfile: Dockerfile 
+    command: python3 app.py  
+    environment:
+      - HOST=0.0.0.0  
+      - PORT=8089  
+    ports:
+      - "8089:8089"  
+    volumes:
+      - .:/app  
+      - vscode-server:/root/.vscode-server  
+    env_file:
+      - .env  
+    networks:
+      - default 
+      - traefik_default  
+
+volumes:
+  vscode-server:  
+
+networks:
+  default:  
+  traefik_default:  
+    external: true  # Use an external network, typically created by Traefik

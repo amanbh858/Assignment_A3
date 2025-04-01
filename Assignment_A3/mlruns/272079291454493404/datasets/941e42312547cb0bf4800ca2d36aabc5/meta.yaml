@@ -1,0 +1,9 @@
+digest: d2aaf7d5
+name: dataset
+profile: '{"num_rows": 80, "num_elements": 240}'
+schema: '{"mlflow_colspec": [{"type": "long", "name": "x1", "required": true}, {"type":
+  "long", "name": "x2", "required": true}, {"type": "long", "name": "y", "required":
+  true}]}'
+source: '{"tags": {"mlflow.user": "91700", "mlflow.source.name": "c:\\Users\\91700\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\ipykernel_launcher.py",
+  "mlflow.source.type": "LOCAL"}}'
+source_type: code

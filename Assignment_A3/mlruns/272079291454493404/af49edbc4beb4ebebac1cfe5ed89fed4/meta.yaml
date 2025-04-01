@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/91700/Desktop/My_Assignment_A3/Assigment_A3/mlruns/272079291454493404/af49edbc4beb4ebebac1cfe5ed89fed4/artifacts
+end_time: 1743250384697
+entry_point_name: ''
+experiment_id: '272079291454493404'
+lifecycle_stage: active
+run_id: af49edbc4beb4ebebac1cfe5ed89fed4
+run_name: able-cat-308
+run_uuid: af49edbc4beb4ebebac1cfe5ed89fed4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1743250369986
+status: 3
+tags: []
+user_id: '91700'
