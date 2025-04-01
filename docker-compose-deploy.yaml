@@ -1,4 +1,6 @@
-ervices:
+version: '3.9'
+
+services:
   flask-app:
     command: python3 app.py  # Ensure Flask runs the correct file
     image: amanbh858/my_model:latest
