@@ -92,16 +92,16 @@ jobs:
           chmod 600 ~/.ssh/st125713
           
           cat << 'EOF' > ~/.ssh/config
-          Host bazooka
+          Host bazooka1
             HostName bazooka.cs.ait.ac.th
             User st125713
-            IdentityFile ~/.ssh/st125713
+            IdentityFile C:\Users\91700\.ssh\st125713
           
-          Host ml2023
+          Host ml.brain1
             HostName ml.brain.cs.ait.ac.th
             User st125713
-            IdentityFile ~/.ssh/st125713
-            ProxyJump bazooka
+            IdentityFile C:\Users\91700\.ssh\st125713
+            ProxyJump bazooka1
             StrictHostKeyChecking no
             UserKnownHostsFile /dev/null
           EOF
