@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   flask-app:
-    image: amanbh858/assign_a3:latest  # Use the existing Docker image
+    image: amanbh858/assignment_a3:latest  # Use the existing Docker image
     platform: linux/x86_64
     environment:
       - FLASK_APP=app.py

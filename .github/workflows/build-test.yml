@@ -74,8 +74,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-           docker build -t amanbh858/assign_a3:latest . 
-           docker push amanbh858/assign_a3:latest
+           docker build -t amanbh858/assignment_a3:latest . 
+           docker push amanbh858/assignment_a3:latest
 
   deploy:
     needs: build-and-test  # Deploys only if tests were successful
@@ -121,6 +121,6 @@ jobs:
           fi
           cd /home/st125713 || { echo "ERROR: Navigation failure to /home/st125713!"; exit 1; }
           docker compose -f docker-compose-deploy.yaml down
-          docker pull amanbh858/assign_a3:latest  # Pull the updated Flask image
+          docker pull amanbh858/assignment_a3:latest  # Pull the updated Flask image
           docker compose -f docker-compose-deploy.yaml up -d
           EOF
