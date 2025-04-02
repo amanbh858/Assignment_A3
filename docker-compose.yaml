@@ -6,7 +6,7 @@ services:
     build:
       context: .  
       dockerfile: Dockerfile 
-    command: python3 app.py  
+    command: python app.py  
     environment:
       - HOST=0.0.0.0  
       - PORT=8089  
