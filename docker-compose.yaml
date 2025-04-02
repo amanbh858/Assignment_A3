@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   flask-app:
-    image: amanbh858/assignment_a3:latest 
+    image: amanbh858/assign_a3:latest
     build:
       context: .  
       dockerfile: Dockerfile 

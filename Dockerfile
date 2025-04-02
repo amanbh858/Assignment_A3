@@ -8,7 +8,7 @@ RUN apk add --no-cache \
     build-base \
     && pip install --upgrade pip
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /
 
 # Copy the requirements file into the container
 COPY requirements.txt .
